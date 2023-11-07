@@ -20,6 +20,7 @@ class Product(db.Model):
 if __name__ == "__main__":
     from app import app
     with app.app_context():
+        db.create_all()
         c1 = Category(name="Mobile")
         c2 = Category(name="Tablet")
         p1 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
@@ -32,4 +33,3 @@ if __name__ == "__main__":
 
 
         db.session.commit()
-        # db.create_all()
