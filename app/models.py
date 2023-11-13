@@ -1,7 +1,16 @@
 from sqlalchemy import Column, Integer, String , Float, ForeignKey
 from app import db
 from sqlalchemy.orm import relationship
+from flask_login import UserMixin
 
+class User(db.Model):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(50), nullable=False)
+    username = Column(String(50), nullable=False, unique=True)
+    password = Column(String(50), nullable=False)
+    image=Column(String(100), default='https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Dperson%2Bicon&psig=AOvVaw2Sy_coSUaFSSXd2dWwRtEN&ust=1699974243255000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPDl_tifwYIDFQAAAAAdAAAAABAE')
+    def __str__(self):
+        return self.name
 
 class Category(db.Model):
     __tablename__= 'catelogy'
@@ -9,6 +18,8 @@ class Category(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable= False, unique=True)
     products = relationship('Product', backref='category', lazy=True)
+    def __str__(self):
+        return self.name
 
 class Product(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -29,7 +40,5 @@ if __name__ == "__main__":
         db.session.add(c2)
         db.session.add(p1)
         db.session.add(p2)
-
-
 
         db.session.commit()
