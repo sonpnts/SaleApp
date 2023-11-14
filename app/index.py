@@ -1,6 +1,7 @@
-from flask import render_template, request
+from flask import render_template, request, redirect
 import dao
 from app import app, login
+from flask_login import login_user
 
 
 @app.route('/')
@@ -16,11 +17,11 @@ def index():
 def login_admin_process():
     username = request.form.get('username')
     password = request.form.get('password')
-    if username == 'admin' and password == '123':
-        return 'Đăng nhập thành công'
+    user= dao.auth_user(username=username,password=password)
+    if user:
+        login_user(user=user)
+    return redirect('/admin')
 
-    else:
-        return 'Đăng nhập thất bại'
 
 @login.user_loader
 def get_user(user_id):
