@@ -9,7 +9,7 @@ class UserRoleEnum(enum.Enum):
     ADMIN = 2
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
@@ -52,13 +52,13 @@ if __name__ == "__main__":
         db.session.commit()
 
 
-        c1 = Category(name="Mobile")
-        c2 = Category(name="Tablet")
-        p1 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
-        p2 = Product(name="Ipad Pro 2023", price=200000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
-        db.session.add(c1)
-        db.session.add(c2)
-        db.session.add(p1)
-        db.session.add(p2)
+        # c1 = Category(name="Mobile")
+        # c2 = Category(name="Tablet")
+        # p1 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
+        # p2 = Product(name="Ipad Pro 2023", price=200000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
+        # db.session.add(c1)
+        # db.session.add(c2)
+        # db.session.add(p1)
+        # db.session.add(p2)
 
-        db.session.commit()
+        # db.session.commit()

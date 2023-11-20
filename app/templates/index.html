@@ -23,17 +23,17 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Trang Chủ</a>
+                    <a class="nav-link" href="/">Trang Chủ</a>
                 </li>
-                {%for c in catelogies%}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{c.name}}</a>
-                </li>
+                {% for c in catelogies %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/?cate_id={{ c.id }}">{{ c.name }}</a>
+                    </li>
                 {% endfor %}
 
             </ul>
-            <form class="d-flex" method="get" action ="/">
-                <input class="form-control me-2" type="text" placeholder="Nhập từ khóa" name = kw >
+            <form class="d-flex" method="get" action="/">
+                <input class="form-control me-2" type="text" placeholder="Nhập từ khóa" name=kw>
                 <button class="btn btn-primary" type="submit">Tìm kiếm</button>
             </form>
         </div>
@@ -41,20 +41,25 @@
 </nav>
 
 <section class="container">
+    <ul class="pagination mt-1">
+        {% for i in range(pages) %}
+        <li class="page-item"><a class="page-link" href="/?page={{ i + 1}}">{{ i + 1}}</a></li>
+        {% endfor %}
+     </ul>
     <div class="row">
         {% for p in product %}
-        <div class="col-xs-12 col-md-3">
-            <div class="card">
-                <img class="card-img-top" src="{{p.image}}" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">{{p.name}}</h4>
-                    <p class="card-text">{{p.price}}</p>
-                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
-                    <a href="#" class="btn btn-primary">Đặt hàng</a>
+            <div class="col-xs-12 col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="{{ p.image }}" alt="Card image">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ p.name }}</h4>
+                        <p class="card-text">{{ p.price }}</p>
+                        <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        <a href="#" class="btn btn-primary">Đặt hàng</a>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
         {% endfor %}
     </div>
 </section>
