@@ -42,26 +42,24 @@ if __name__ == "__main__":
     from app import app
     with app.app_context():
         db.create_all()
-
-        import hashlib
-
-        u = User(name='Admin', username='admin',
-                 password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest()),user_role = UserRoleEnum.ADMIN)
-
-        db.session.add(u)
-        db.session.commit()
-
-
-        # c1 = Category(name="Mobile")
-        # c2 = Category(name="Tablet")
-        # p1 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
-        # p2 = Product(name="Ipad Pro 2023", price=200000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
-        # p3 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
-        # p4 = Product(name="Ipad Pro 2023", price=200000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
-        # p5 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
-        # p6 = Product(name="Ipad Pro 2023", price=200000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
-        # db.session.add(c1)
-        # db.session.add(c2)
-        # db.session.add_all([p1, p2, p3, p4, p5,p6])
-
+        # import hashlib
+        #
+        # u = User(name='Admin', username='admin',
+        #          password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest()),user_role = UserRoleEnum.ADMIN)
+        #
+        # db.session.add(u)
         # db.session.commit()
+
+        c1 = Category(name="Mobile")
+        c2 = Category(name="Tablet")
+        p1 = Product(name="Iphone 12", price=150000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
+        p2 = Product(name="Ipad Pro ", price=280000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
+        p3 = Product(name="Iphone 13", price=170000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
+        p4 = Product(name="Ipad Pro 2021", price=260000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
+        p5 = Product(name="Iphone 15", price=130000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=1)
+        p6 = Product(name="Ipad Pro 2020", price=210000, image="https://www.techone.vn/wp-content/uploads/2023/09/iphone-15-pro-max_2__5.webp", category_id=2)
+        db.session.add(c1)
+        db.session.add(c2)
+        db.session.add_all([p1, p2, p3, p4, p5,p6])
+
+        db.session.commit()

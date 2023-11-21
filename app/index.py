@@ -1,12 +1,12 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, jsonify
 import dao
+import utils
 from app import app, login
 from flask_login import login_user
 import math
 
 
 @app.route('/')
-
 def index():
     kw = request.args.get('kw')
     cate_id = request.args.get('cate_id')
@@ -18,6 +18,32 @@ def index():
 
     return render_template('index.html', catelogies = cates, product = products,
                            pages=math.ceil(total/app.config['PAGE_SIZE']))
+
+@app.route('/api/cart', methods=['post'])
+def add_cart():
+
+    cart = session.get('cart')
+    if cart is None:
+        cart = {}
+
+    data = request.json
+    id = str(data.get('id'))
+
+    if id in cart:
+        cart[id]["quantity"]=cart[id]["quantity"] + 1
+
+    else:
+        cart[id] = {
+            "id": id,
+            "name":data.get("name"),
+            "price":data.get("price"),
+            "quantity":1
+        }
+
+    session['cart'] = cart
+
+    return jsonify(utils.count_cart(cart))
+
 
 @app.route('/admin/login', methods=['post'])
 def login_admin_process():
