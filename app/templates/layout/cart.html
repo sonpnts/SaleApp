@@ -3,3 +3,9 @@
 {% block title %}Trang giỏ hàng{% endblock %}
 
 {% block content %}
+
+{% if 'cart' in session %}
+    {%for c in session['cart'].values() %}
+{%endif%}
+
+{% endblock %}
