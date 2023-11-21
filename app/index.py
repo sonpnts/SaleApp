@@ -12,16 +12,23 @@ def index():
     cate_id = request.args.get('cate_id')
     page = request.args.get('page')
     cates = dao.load_catelogies()
-    products = dao.load_product(kw=kw,cate_id=cate_id,page=page)
+    products = dao.load_product(kw=kw, cate_id=cate_id, page=page)
 
     total = dao.count_product()
 
-    return render_template('index.html', catelogies = cates, product = products,
-                           pages=math.ceil(total/app.config['PAGE_SIZE']))
+    return render_template('index.html', catelogies=cates, product=products,
+                           pages=math.ceil(total / app.config['PAGE_SIZE']))
+
+@app.context_processor
+def common_resp():
+    return {
+        'catelogies': dao.load_catelogies(),
+        'cart': utils.count_cart(session.get('cart'))
+    }
+
 
 @app.route('/api/cart', methods=['post'])
 def add_cart():
-
     cart = session.get('cart')
     if cart is None:
         cart = {}
@@ -30,14 +37,14 @@ def add_cart():
     id = str(data.get('id'))
 
     if id in cart:
-        cart[id]["quantity"]=cart[id]["quantity"] + 1
+        cart[id]["quantity"] = cart[id]["quantity"] + 1
 
     else:
         cart[id] = {
             "id": id,
-            "name":data.get("name"),
-            "price":data.get("price"),
-            "quantity":1
+            "name": data.get("name"),
+            "price": data.get("price"),
+            "quantity": 1
         }
 
     session['cart'] = cart
@@ -49,26 +56,22 @@ def add_cart():
 def login_admin_process():
     username = request.form.get('username')
     password = request.form.get('password')
-    user=dao.auth_user(username=username,password=password)
-    # try:
-    #     if user:
-    #         login_user(user=user)
-    #         return redirect('/admin')
-    #
-    # except Exception as ex:
-    #     return(ex)
-    # #
-    #     return redirect('/admin/login')
+    user = dao.auth_user(username=username, password=password)
     if user:
         login_user(user=user)
 
     return redirect('/admin')
 
+@app.route('/cart')
+def cart_list():
+    return render_template('cart.html')
 
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     from app import admin
+
     app.run(debug=True)
