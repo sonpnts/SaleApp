@@ -93,6 +93,11 @@ def cart_list():
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
 
+@app.route("/login")
+def login_user_process():
+    return render_template("login.html")
+
+
 
 if __name__ == '__main__':
     from app import admin

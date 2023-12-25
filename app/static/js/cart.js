@@ -37,7 +37,7 @@ function updateCart(id, obj){
 
       let a = document.getElementsByClassName('cart-total');
       for( let d of a)
-        d.innerText = data.total_amount
+        d.innerText = new Intl.NumberFormat().format(data.total_amount)
     })
 }
 
