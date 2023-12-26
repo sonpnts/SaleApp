@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     password = Column(String(255), nullable=False)
     user_role = Column(Enum(UserRoleEnum), default=UserRoleEnum.USER)
 
-    image=Column(String(255), default='https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Dperson%2Bicon&psig=AOvVaw2Sy_coSUaFSSXd2dWwRtEN&ust=1699974243255000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCPDl_tifwYIDFQAAAAAdAAAAABAE')
+    avatar=Column(String(255), default='https://cdn.chanhtuoi.com/uploads/2020/05/icon-facebook-08-2.jpg.webp')
     def __str__(self):
         return self.name
 
@@ -42,13 +42,13 @@ if __name__ == "__main__":
     from app import app
     with app.app_context():
         db.create_all()
-        # import hashlib
-        #
-        # u = User(name='Admin', username='admin',
-        #          password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest()),user_role = UserRoleEnum.ADMIN)
-        #
-        # db.session.add(u)
-        # db.session.commit()
+        import hashlib
+
+        u = User(name='Admin', username='admin',
+                 password = str(hashlib.md5('123456'.encode('utf-8')).hexdigest()),user_role = UserRoleEnum.ADMIN)
+
+        db.session.add(u)
+        db.session.commit()
 
         c1 = Category(name="Mobile")
         c2 = Category(name="Tablet")

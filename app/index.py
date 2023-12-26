@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, session, jsonify
 import dao
 import utils
 from app import app, login
-from flask_login import login_user
+from flask_login import login_user, logout_user
 import math
 
 
@@ -93,11 +93,41 @@ def cart_list():
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
 
-@app.route("/login")
+@app.route("/login", methods=['get','post'])
 def login_user_process():
+    if request.method.__eq__('POST'):
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = dao.auth_user(username=username, password=password)
+        if user:
+            login_user(user=user)
+
+        next = request.args.get('next')
+        return redirect("/" if next is None else next)
     return render_template("login.html")
 
 
+@app.route('/logout')
+def process_logout_user():
+    logout_user()
+    return redirect("/login")
+
+@app.route('/register',  methods=['get','post'])
+def register_user():
+    err_msg = ""
+    if request.method.__eq__('POST'):
+        password = request.form.get('password')
+        confirm = request.form.get('confirm')
+
+        if password.__eq__(confirm):
+            try:
+                dao.add_user(name=request.form.get('name'),
+                             username=request.form.get('username'),
+                             avatar=request)
+            # request.files['avatar']
+        else:
+            err_msg = "Mật khẩu không khớp! Vui lòng nhập lại"
+    return render_template('register.html', err_msg=err_msg)
 
 if __name__ == '__main__':
     from app import admin

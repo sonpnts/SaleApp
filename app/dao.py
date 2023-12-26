@@ -1,7 +1,7 @@
 import hashlib
 
 from app.models import Category, Product, User
-from app import app
+from app import app,db
 
 def load_catelogies():
     return Category.query.all()
@@ -37,3 +37,8 @@ def auth_user(username, password):
 
     return User.query.filter(User.username.__eq__(username.strip()),
                              User.password.__eq__(password)).first()
+
+def add_user(name, username, password, avatar):
+    password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
+    u = User(name=name, username=username, password=password, avatar="https://cdn.chanhtuoi.com/uploads/2020/05/icon-facebook-08-2.jpg.webp")
+    db.session.commit()
