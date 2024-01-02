@@ -3,7 +3,7 @@ from flask_admin import Admin, BaseView, expose, AdminIndexView
 from app import app, db, dao
 from app.models import Category, Product
 from flask_login import logout_user, current_user
-from flask import redirect
+from flask import redirect, request
 from app.models import UserRoleEnum
 class AuthenticatedUser(BaseView):
     def is_accessible(self):
@@ -13,7 +13,8 @@ class AuthenticatedUser(BaseView):
 class MyAdminIndexView(AdminIndexView):
     @expose('/')
     def index(self):
-        return self.render('admin/index.html', stats=dao.count_products_by_cate())
+        kw = request.args.get("kw")
+        return self.render('admin/index.html', stats=dao.revenue_stats(kw))
 
 
 
