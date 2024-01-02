@@ -3,6 +3,7 @@
     {% if current_user.is_authenticated %}
         <h1> CHÀO MỪNG ĐẾN VỚI TRANG QUẢN TRỊ</h1>
         <h2 class="text-danger"> Xin chào {{ current_user.name }}</h2>
+        <h1>{{ stats }}</h1>
     {% else %}
         <form method="post" action="/admin/login">
             <div class="form-floating mb-3 mt-3">

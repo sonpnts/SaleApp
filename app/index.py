@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, jsonify
 import dao
 import utils
-from app import app, login
+from app import app, login, db
 from flask_login import login_user, logout_user
 import math
 
@@ -104,7 +104,7 @@ def login_user_process():
 
         next = request.args.get('next')
         return redirect("/" if next is None else next)
-    return render_template("login.html")
+    return render_template ("login.html")
 
 
 @app.route('/logout')
@@ -123,13 +123,28 @@ def register_user():
             try:
                 dao.add_user(name=request.form.get('name'),
                              username=request.form.get('username'),
-                             avatar=request)
-            # request.files['avatar']
+                            password=password,
+                             avatar=request.files.get('avatar'))
+            except:
+                err_msg = 'Hệ thống đang bận, vui lòng thử lại sau!'
+            else:
+                return redirect('/login')
         else:
             err_msg = "Mật khẩu không khớp! Vui lòng nhập lại"
     return render_template('register.html', err_msg=err_msg)
 
+@app.route('/pay', methods=['post'])
+def pay():
+    try:
+        dao.add_recipt(session.get('cart'))
+    except:
+        return jsonify({'status':500,'err_msg': 'Hệ thống đang bận, vui lòng thử lại sau!'})
+    else:
+        del session['cart']
+        return jsonify({'status':200})
+
+
+
 if __name__ == '__main__':
     from app import admin
-
     app.run(debug=True)

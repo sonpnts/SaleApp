@@ -9,28 +9,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Trang Chủ</a>
                 </li>
-                {%for c in catelogies %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{c.name}}</a>
-                </li>
-                {%endfor%}
+                {% for c in catelogies %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{{ c.name }}</a>
+                    </li>
+                {% endfor %}
 
                 {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="/" >
-                        <img width="30px" class="img-rounder" src="{{current_user.avatar}}">
-                        Chào {{current_user.username}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="/logout">Đăng xuất</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="/">
+                            <img width="30px" class="img-rounder" src="{{ current_user.avatar }}">
+                            Chào {{ current_user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="/logout">Đăng xuất</a>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="/login">Đăng nhập</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-info" href="/register">Đăng ký</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="/login">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="/register">Đăng ký</a>
+                    </li>
                 {% endif %}
 
 

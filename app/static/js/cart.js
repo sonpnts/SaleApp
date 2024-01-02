@@ -57,3 +57,18 @@ function deleteCart(id, obj){
         })
     }
 }
+
+function pay() {
+    if (confirm("Ban chac chan muon thanh toan khong") ===true){
+        fetch('/api/cart',{
+            method:"post",
+        }).then(res=>res.json()).then(data=>{
+           if(data.status === 200){
+               alert("Thanh toan thanh cong")
+               location.reload()
+
+           else
+               alert(data.err_msg)
+        })
+    }
+}

@@ -40,11 +40,16 @@
 
         <div>
             {% if current_user.is_authenticated %}
-                <button class="btn btn-success">Thanh toán</button>
+                <button class="btn btn-success" onclick="pay()">Thanh toán</button>
             {% else %}
                 <p>Vui lòng <a href="login?next=/cart">đăng nhập</a> để thanh toán!</p>
             {% endif %}
         </div>
+    {% else %}
+        <div class="alert alert-info mt-1">
+            <h3>Giỏ hàng trống</h3>
+        </div>
+
     {% endif %}
 
 {% endblock %}
